@@ -44,7 +44,7 @@ const MovieDetail = () => {
             <div className="w-full md:w-1/3 px-4 md:px-0">
             <div className="relative max-w-[90%] mx-auto md:max-w-none">
             <span className="lazy-load-image-background lazy-load-image-loaded">
-                <img src={`https://img.ophim.live/uploads/movies/${film.item.thumb_url}`} alt="Love at Second Sight" className="w-full rounded-lg shadow-lg"/>
+                <img src={`https://img.ophim.live/uploads/movies/${film.item.thumb_url}`}  className="w-full rounded-lg shadow-lg"/>
             </span>
 
                     <div className="absolute bottom-4 left-4 right-4 flex gap-4">
@@ -104,6 +104,7 @@ const MovieDetail = () => {
         </div>
 
         </div>
+        <div className="basis-1/3 border"></div>
         </div>
         
 

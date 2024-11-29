@@ -4,13 +4,16 @@ import Footer from "../components/footer/Footer";
 
 const DefaultLayout = () => {
   return (
-    <div className="w-full min-h-screen">
+    <div className="w-full min-h-screen flex flex-col">
+      {/* Header Section */}
       <Header />
-      <div className="mt-10 w-full px-52">
+      {/* Content Section */}
+      <div className="flex-grow mt-16 w-full px-52">
         <Outlet />
       </div>
-        <Footer/>
-    </div>  
+      {/* Footer Section */}
+      <Footer />
+    </div>
   );
 };
 
