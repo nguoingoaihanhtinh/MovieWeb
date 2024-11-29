@@ -5,7 +5,14 @@
   text-align: center;
   width: 100%;
 }
+.img-blur {
+  filter: blur(10px);
+  transition: filter 0.3s ease-out;
+}
 
+.img-loaded {
+  filter: blur(0);
+}
 .logo {
   height: 6em;
   padding: 1.5em;

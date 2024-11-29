@@ -2,44 +2,68 @@ import React, { useEffect, useState } from 'react';
 import FilmCard from './FilmCard';
 import { Pagination } from 'antd';
 
-const FilmList = ({ categoryUrl, number }) => {
-  const [movies, setMovies] = useState([]);
-  const [total, setTotal] = useState(0); // Total number of movies
-  const [page, setPage] = useState(1);
+const FilmList = ({ categoryUrl, grid, itemPerPage, pageLimit }) => {
+  const [movies, setMovies] = useState({}); // Cache of fetched movies by page
+  const [currentPage, setCurrentPage] = useState(1); // Current page
+  const [loading, setLoading] = useState(false); // Loading state
+  const [totalMovies, setTotalMovies] = useState(0); // Total number of movies
 
-  // Determine page size based on the grid column count
-  const pageSize = number === 6 ? 6 : 8;
+  const fetchMovies = async (page) => {
+    setLoading(true); // Set loading state before fetching data
+
+    try {
+      const response = await fetch(`${categoryUrl}&page=${page}`);
+      const data = await response.json();
+
+      if (data.data && Array.isArray(data.data.items)) {
+        const fetchedMovies = data.data.items.slice(0, itemPerPage); // Respect `itemPerPage` here
+        setMovies((prev) => ({
+          ...prev,
+          [page]: fetchedMovies,
+        }));
+
+        // Dynamically set totalMovies based on valid data received
+        setTotalMovies((prevTotal) =>
+          Math.min(prevTotal + fetchedMovies.length, pageLimit * itemPerPage)
+        );
+      }
+    } catch (error) {
+      console.error(`Error fetching page ${page}:`, error);
+    } finally {
+      setLoading(false); // Reset loading state
+    }
+  };
 
   useEffect(() => {
-    fetch(categoryUrl)
-      .then(response => response.json())
-      .then(data => {
-        if (data.data && Array.isArray(data.data.items)) {
-          setMovies(data.data.items); // Load movies
-          setTotal(data.data.items.length); // Set total movie count
-        } else {
-          console.error('Expected an array in "data.data.items", but received:', data);
-        }
-      })
-      .catch(error => console.error('Error fetching data: ', error));
-  }, [categoryUrl]);
+    // Clear previous movies and reload from page 1 whenever `categoryUrl` changes
+    setMovies({});
+    setCurrentPage(1); // Reset to page 1 when the filter changes
 
-  // Paginate the movies array based on the current page and pageSize
-  const currentMovies = movies.slice((page - 1) * pageSize, page * pageSize);
+    fetchMovies(1); // Fetch first page after URL change
 
-  if (movies.length === 0) {
+    // Optionally, preload the next two pages
+    if (1 + 1 <= pageLimit) fetchMovies(2);
+    if (1 + 2 <= pageLimit) fetchMovies(3);
+  }, [categoryUrl, pageLimit]); // Re-fetch data whenever `categoryUrl` changes
+
+  const currentMovies = movies[currentPage] || [];
+
+  if (loading && currentMovies.length === 0) {
     return <p>Loading...</p>;
   }
 
-  // Generate a dynamic grid class based on the number of columns
-  const gridClass = `grid grid-cols-${number} gap-4 mt-4 px-5`;
+  if (totalMovies === 0) {
+    return <p>No movies available</p>;
+  }
+
+  const gridClass = `grid grid-cols-${grid} gap-4 mt-2 px-5`;
 
   return (
     <div>
       <div className={gridClass}>
-        {currentMovies.map(movie => (
+        {currentMovies.map((movie) => (
           <FilmCard
-            key={movie.id}
+            key={movie._id}
             img={movie.thumb_url}
             title={movie.name}
             origin_name={movie.origin_name}
@@ -49,13 +73,15 @@ const FilmList = ({ categoryUrl, number }) => {
           />
         ))}
       </div>
+
       <div className="w-full flex justify-center mt-5">
         <Pagination
-          className="items-center"
-          onChange={(page) => setPage(page)}
-          total={total}
-          current={page}
-          pageSize={pageSize}
+          current={currentPage}
+          total={Math.min(totalMovies, pageLimit * itemPerPage)} // Ensure total respects pageLimit
+          pageSize={itemPerPage}
+          onChange={(page) => setCurrentPage(page)}
+          showSizeChanger={false}
+          hideOnSinglePage={totalMovies <= itemPerPage}
         />
       </div>
     </div>
