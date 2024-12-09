@@ -28,8 +28,9 @@ const FilmListPage = () => {
   });
 
   const [categoryName, setCategoryName] = useState('Loading...');
-  
-  // Dynamically set the category name based on filters or URL param
+  const [movies, setMovies] = useState({}); // Store all preloaded movies
+  const [loading, setLoading] = useState(true); // Loading state for preload
+
   useEffect(() => {
     if (filters.movieType) {
       setCategoryName(categoryMap[filters.movieType] || 'Unknown Category');
@@ -38,7 +39,6 @@ const FilmListPage = () => {
     }
   }, [filters.movieType, name]);
 
-  // Dynamically create the API URL based on current filters
   const FilmUrl = `https://ophim1.com/v1/api/danh-sach/${filters.movieType || ''}?category=${filters.genre}&country=${filters.country}&year=${filters.year}&sort_field=${filters.sort_field}`;
 
   const handleFilterChange = (filterName, value) => {
@@ -48,11 +48,30 @@ const FilmListPage = () => {
     }));
   };
 
-  // Trigger an API call when filters change
+  const preloadMovies = async () => {
+    setLoading(true);
+    try {
+      const newMovies = {};
+      const totalPagesToFetch = 5; // Number of pages to preload
+      for (let page = 1; page <= totalPagesToFetch; page++) {
+        const response = await fetch(`${FilmUrl}&page=${page}`);
+        const data = await response.json();
+        if (data.data && Array.isArray(data.data.items)) {
+          newMovies[page] = data.data.items;
+        }
+      }
+      setMovies(newMovies);
+    } catch (error) {
+      console.error('Error preloading movies:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    // Optional: Log the URL to debug
-    console.log('Fetching films with URL:', FilmUrl);
-  }, [FilmUrl]); // This effect will run every time `FilmUrl` changes
+    setMovies({});
+    preloadMovies();
+  }, [FilmUrl]);
 
   return (
     <div>
@@ -70,12 +89,14 @@ const FilmListPage = () => {
               </h1>
             </div>
             <Suspense fallback={<div>Loading films...</div>}>
-              <FilmList 
-                categoryUrl={FilmUrl} 
-                grid={4} 
-                itemPerPage={20} // Set number of items per page dynamically
-                pageLimit={8}
-              />
+              {!loading && (
+                <FilmList
+                  movies={movies}
+                  grid={4}
+                  itemPerPage={20}
+                  pageLimit={5}
+                />
+              )}
             </Suspense>
           </div>
         </div>
