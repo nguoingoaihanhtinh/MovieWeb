@@ -12,7 +12,7 @@ const Router = createBrowserRouter(
         <Route path="*" element={<DefaultLayout />}>
           <Route index element={<HomePage />} />
           <Route path="detail/:name" element={<MovieDetail />} />
-          <Route path="watch/:name" element={<WatchPage />} />
+          <Route path="watch/:name/episode/:id" element={<WatchPage />} />
           <Route path="list" element={<FilmListPage />} />
         </Route>
       </Route>
