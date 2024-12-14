@@ -1,19 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { FaAngleLeft, FaAngleRight, FaCalendar, FaGlobe } from 'react-icons/fa';
-import RatingCircle from '../../components/Rating/CircularRating';
-import { FaFilm, FaLanguage } from 'react-icons/fa6';
+import { useState, useEffect } from "react";
+import { FaAngleLeft, FaAngleRight, FaCalendar, FaGlobe } from "react-icons/fa";
+import RatingCircle from "../../components/Rating/CircularRating";
+import { FaFilm, FaLanguage } from "react-icons/fa6";
 
+// eslint-disable-next-line react/prop-types
 const Hero = ({ data = [] }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const defaultMovie = {
-    poster_url: 'default_image_url', // Replace with an actual default image URL
-    name: 'Untitled',
-    origin_name: 'Unknown Origin',
-    year: 'N/A',
-    country: [{ name: 'Unknown' }],
-    lang: 'N/A',
-    quality: 'Unknown',
+    poster_url: "default_image_url", // Replace with an actual default image URL
+    name: "Untitled",
+    origin_name: "Unknown Origin",
+    year: "N/A",
+    country: [{ name: "Unknown" }],
+    lang: "N/A",
+    quality: "Unknown",
     tmdb: { vote_average: null },
   };
 
@@ -60,9 +61,7 @@ const Hero = ({ data = [] }) => {
               <p className="flex items-center gap-2 text-lg">
                 <FaGlobe /> {currentMovie.country[0]?.name}
               </p>
-              {currentMovie.tmdb.vote_average && (
-                <RatingCircle rating={currentMovie.tmdb.vote_average} />
-              )}
+              {currentMovie.tmdb.vote_average && <RatingCircle rating={currentMovie.tmdb.vote_average} />}
             </div>
             <p className="flex items-center gap-2 text-lg">
               <FaLanguage />
@@ -74,7 +73,7 @@ const Hero = ({ data = [] }) => {
             </p>
             <button
               className="px-6 py-2 bg-blue-600 hover:bg-blue-500 rounded text-white font-medium"
-              onClick={() => alert('More info coming soon!')}
+              onClick={() => alert("More info coming soon!")}
             >
               More Info
             </button>

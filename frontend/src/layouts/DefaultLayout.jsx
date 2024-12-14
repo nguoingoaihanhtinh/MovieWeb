@@ -8,7 +8,7 @@ const DefaultLayout = () => {
       {/* Header Section */}
       <Header />
       {/* Content Section */}
-      <div className="flex mt-16 w-full px-40 bg-gray-800">
+      <div className="flex mt-10 w-full px-40 bg-gray-800">
         <Outlet />
       </div>
       {/* Footer Section */}
