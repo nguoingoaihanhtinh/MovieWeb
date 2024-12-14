@@ -25,9 +25,19 @@ const RelatedList = ({ slug }) => {
   const fetchRelatedMovies = async (categorySlug) => {
     try {
       setLoading(true);
-      const response = await fetch(`https://ophim1.com/v1/api/danh-sach/phim-bo?category=${categorySlug}&page=1`);
-      const data = await response.json();
-      setRelatedMovies(data?.data?.items || []);
+      const fetchPage = async (page) => {
+        const response = await fetch(
+          `https://ophim1.com/v1/api/danh-sach/phim-bo?category=${categorySlug}&page=${page}`
+        );
+        const data = await response.json();
+        return data?.data?.items || [];
+      };
+
+      const [page1Movies, page2Movies] = await Promise.all([fetchPage(1), fetchPage(2)]);
+
+      const combinedMovies = [...page1Movies, ...page2Movies].filter((movie) => movie.slug !== slug);
+
+      setRelatedMovies(combinedMovies);
     } catch (error) {
       console.error("Error fetching related movies:", error);
     } finally {

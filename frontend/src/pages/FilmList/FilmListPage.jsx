@@ -80,7 +80,7 @@ const FilmListPage = () => {
   }, [FilmUrl]);
 
   return (
-    <div>
+    <div className="bg-black/50 p-5">
       <div className="filter">
         <Suspense fallback={<div>Loading filters...</div>}>
           <Filter onFilterChange={handleFilterChange} />
