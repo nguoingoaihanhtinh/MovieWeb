@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
-import React, { useState } from "react";
+import { useState } from "react";
 
-const FilmCard = ({ id, img, title, origin_name, status, quality, slug }) => {
+// eslint-disable-next-line react/prop-types
+const FilmCard = ({ img, title, origin_name, status, quality, slug }) => {
   // Ensure full URL for the image if it's a relative URL
-  const fullImageUrl = img.startsWith("http") ? img : `https://img.ophim.live/uploads/movies/${img}`;
+  const fullImageUrl = `https://img.ophim.live/uploads/movies/${img}`;
 
   // Low-quality version of the image (can be either a tiny version or a blurred placeholder)
   const lowQualityImage = `${fullImageUrl}?w=10`; // This is just an example, you can adjust the image URL to create a low-res version
@@ -15,9 +16,6 @@ const FilmCard = ({ id, img, title, origin_name, status, quality, slug }) => {
     setIsLoaded(true);
   };
 
-  // Encode the title for the URL to handle special characters
-  const encodedTitle = encodeURIComponent(title);
-
   return (
     <Link to={`/detail/${encodeURIComponent(slug)}`}>
       <div className="shadow-lg transition-all duration-500 hover:shadow-xl dark:bg-slate-700 dark:text-white cursor-pointer rounded-xl">
@@ -26,7 +24,9 @@ const FilmCard = ({ id, img, title, origin_name, status, quality, slug }) => {
           <img
             src={lowQualityImage}
             alt={title}
-            className={`mx-auto rounded-t-xl h-[300px] w-full bg-cover bg-no-repeat object-cover transition duration-700 ${isLoaded ? 'img-loaded' : 'img-blur'}`}
+            className={`mx-auto rounded-t-xl h-[300px] w-full bg-cover bg-no-repeat object-cover transition duration-700 ${
+              isLoaded ? "img-loaded" : "img-blur"
+            }`}
             loading="lazy"
           />
 
@@ -34,7 +34,9 @@ const FilmCard = ({ id, img, title, origin_name, status, quality, slug }) => {
           <img
             src={fullImageUrl}
             alt={title}
-            className={`absolute top-0 left-0 w-full h-full object-cover rounded-t-xl transition-all duration-700 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+            className={`absolute top-0 left-0 w-full h-full object-cover rounded-t-xl transition-all duration-700 ${
+              isLoaded ? "opacity-100" : "opacity-0"
+            }`}
             onLoad={handleImageLoad} // This will trigger when the full image is loaded
             loading="lazy"
           />

@@ -1,14 +1,16 @@
-import React, { useState, useEffect, Suspense } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
-import FilmList from '../../components/Films/FilmList';
-import PopolarFilm from '../HomePage/Popular/PopolarFilm';
-import Filter from '../../components/Films/Filter';
+import { useState, useEffect, Suspense } from "react";
+import { useParams, useLocation } from "react-router-dom";
+import FilmList from "../../components/Films/FilmList";
+import PopolarFilm from "../HomePage/Popular/PopolarFilm";
+import Filter from "../../components/Films/Filter";
 
 const categoryMap = {
-  'phim-le': 'Phim Lẻ',
-  'phim-bo': 'Phim Bộ',
-  'tv-shows': 'TV Show',
-  'hoat-hinh': 'Hoạt Hình',
+  "phim-le": "Phim Lẻ",
+  "phim-bo": "Phim Bộ",
+  "tv-shows": "TV Show",
+  "hoat-hinh": "Hoạt Hình",
+  "phim-sap-chieu": "Phim sắp chiếu",
+  hot: "Phim Hot",
 };
 
 const FilmListPage = () => {
@@ -16,30 +18,34 @@ const FilmListPage = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
 
-  const movieType = queryParams.get('movieType');
-  const country = queryParams.get('country');
+  const movieType = queryParams.get("movieType");
+  const country = queryParams.get("country");
 
   const [filters, setFilters] = useState({
-    movieType: movieType || '',
-    genre: '',
-    country: country || '',
-    year: '',
-    sort_field: '',
+    movieType: movieType || "",
+    genre: "",
+    country: country || "",
+    year: "",
+    sort_field: "",
   });
 
-  const [categoryName, setCategoryName] = useState('Loading...');
+  const [categoryName, setCategoryName] = useState("Loading...");
   const [movies, setMovies] = useState({}); // Store all preloaded movies
   const [loading, setLoading] = useState(true); // Loading state for preload
-
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scrolls to the top-left corner of the page
+  }, []);
   useEffect(() => {
     if (filters.movieType) {
-      setCategoryName(categoryMap[filters.movieType] || 'Unknown Category');
+      setCategoryName(categoryMap[filters.movieType] || "Unknown Category");
     } else if (name) {
-      setCategoryName(categoryMap[name] || 'Unknown Category');
+      setCategoryName(categoryMap[name] || "Unknown Category");
     }
   }, [filters.movieType, name]);
 
-  const FilmUrl = `https://ophim1.com/v1/api/danh-sach/${filters.movieType || ''}?category=${filters.genre}&country=${filters.country}&year=${filters.year}&sort_field=${filters.sort_field}`;
+  const FilmUrl = `https://ophim1.com/v1/api/danh-sach/${filters.movieType || ""}?category=${filters.genre}&country=${
+    filters.country
+  }&year=${filters.year}&sort_field=${filters.sort_field}`;
 
   const handleFilterChange = (filterName, value) => {
     setFilters((prevFilters) => ({
@@ -62,7 +68,7 @@ const FilmListPage = () => {
       }
       setMovies(newMovies);
     } catch (error) {
-      console.error('Error preloading movies:', error);
+      console.error("Error preloading movies:", error);
     } finally {
       setLoading(false);
     }
@@ -89,14 +95,7 @@ const FilmListPage = () => {
               </h1>
             </div>
             <Suspense fallback={<div>Loading films...</div>}>
-              {!loading && (
-                <FilmList
-                  movies={movies}
-                  grid={4}
-                  itemPerPage={20}
-                  pageLimit={5}
-                />
-              )}
+              {!loading && <FilmList movies={movies} grid={4} itemPerPage={20} pageLimit={5} />}
             </Suspense>
           </div>
         </div>
