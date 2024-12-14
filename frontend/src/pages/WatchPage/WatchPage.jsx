@@ -31,7 +31,9 @@ const WatchPage = () => {
   useEffect(() => {
     fetchMovieDetails(decodeURIComponent(name));
   }, [name]);
-
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scrolls to the top-left corner of the page
+  }, []);
   // Update video source when the selected episode changes
   useEffect(() => {
     if (selectedEpisode?.link_m3u8 && Hls.isSupported()) {

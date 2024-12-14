@@ -1,21 +1,21 @@
-import React, { useEffect, useState, Suspense } from 'react';
-import { Button } from 'antd'; // Assuming you want to use Ant Design buttons
-import PopularCard from '../../../components/Films/PopularCard';
+import React, { useEffect, useState, Suspense } from "react";
+import { Button } from "antd"; // Assuming you want to use Ant Design buttons
+import PopularCard from "../../../components/Films/PopularCard";
 
 const PopolarFilm = () => {
   const [movies, setMovies] = useState([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1); // For pagination
   const [categoryUrl, setCategoryUrl] = useState(
-    'https://ophim1.com/v1/api/danh-sach/moi?category=&country=&year=&sort_field=week&page=1'
+    "https://ophim1.com/v1/api/danh-sach/moi?category=&country=&year=&sort_field=week&page=1"
   ); // Default URL with 'week'
   const pageSize = 10; // Set your desired page size
 
   // Fetch movies data
   useEffect(() => {
     fetch(categoryUrl)
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         if (data.data && Array.isArray(data.data.items)) {
           setMovies(data.data.items); // Load movies
           setTotal(data.data.items.length); // Set total movie count
@@ -23,7 +23,7 @@ const PopolarFilm = () => {
           console.error('Expected an array in "data.data.items", but received:', data);
         }
       })
-      .catch(error => console.error('Error fetching data: ', error));
+      .catch((error) => console.error("Error fetching data: ", error));
   }, [categoryUrl, page]);
 
   // Paginate the movies array based on the current page and pageSize
@@ -41,7 +41,7 @@ const PopolarFilm = () => {
 
   return (
     <div className="upcoming ">
-      <div className="heading flex items-center justify-between  px-10 py-2">
+      <div className="heading flex items-center justify-between px-10 py-2">
         <div className="relative inline-block">
           <h1 className="font-bold text-xl bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent relative z-10">
             Phim mới
@@ -50,19 +50,19 @@ const PopolarFilm = () => {
         <div className="buttons flex gap-2">
           <Button
             className="bg-gradient-to-r from-orange-500 to-pink-500 text-white font-bold rounded-lg px-4 py-2 hover:from-pink-500 hover:to-orange-500 border-none"
-            onClick={() => handlePeriodChange('week')}
+            onClick={() => handlePeriodChange("week")}
           >
             Tuần
           </Button>
           <Button
             className="bg-gradient-to-r from-orange-500 to-pink-500 text-white font-bold rounded-lg px-4 py-2 hover:from-pink-500 hover:to-orange-500 border-none"
-            onClick={() => handlePeriodChange('month')}
+            onClick={() => handlePeriodChange("month")}
           >
             Tháng
           </Button>
           <Button
             className="bg-gradient-to-r from-orange-500 to-pink-500 text-white font-bold rounded-lg px-4 py-2 hover:from-pink-500 hover:to-orange-500 border-none"
-            onClick={() => handlePeriodChange('year')}
+            onClick={() => handlePeriodChange("year")}
           >
             Năm
           </Button>
@@ -71,7 +71,7 @@ const PopolarFilm = () => {
 
       {/* Lazy load FilmList */}
       <Suspense fallback={<div>Loading...</div>}>
-        <div className="movies-list flex flex-col gap-2 p-5 border-purple-500 border-l">
+        <div className="movies-list flex flex-col gap-2 pl-5 py-5 border-purple-500 border-l">
           {currentMovies.map((movie) => (
             <PopularCard
               key={movie.id} // Ensure each card has a unique key
