@@ -4,7 +4,7 @@ import { Pagination } from "antd";
 
 // eslint-disable-next-line react/prop-types
 const FilmList = ({ movies, grid, itemPerPage }) => {
-  console.log("movies", movies);
+  // console.log("grid", grid);
   const [currentPage, setCurrentPage] = useState(1);
   const movieArray = Object.values(movies).flat();
   // Get the current movies to display
@@ -12,7 +12,17 @@ const FilmList = ({ movies, grid, itemPerPage }) => {
   const endIndex = startIndex + itemPerPage;
   const currentMovies = movieArray.slice(startIndex, endIndex);
 
-  const gridClass = `grid grid-cols-${grid} gap-4 mt-2 px-5`;
+  const gridClass = `grid gap-4 mt-2 px-5 ${
+    grid === 1
+      ? "sm:grid-cols-1"
+      : grid === 2
+      ? "sm:grid-cols-1 md:grid-cols-2"
+      : grid === 3
+      ? "sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+      : grid === 4
+      ? "sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+      : "sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6"
+  }`;
 
   // eslint-disable-next-line react/prop-types
   if (movies.length === 0) {

@@ -18,7 +18,7 @@ const WatchPage = () => {
       setLoading(true);
       const response = await fetch(`https://ophim1.com/v1/api/phim/${movieName}`);
       const data = await response.json();
-      console.log("data", data);
+      // console.log("data", data);
       setMovieDetails(data);
       setSelectedEpisode(data?.data?.item?.episodes?.[0]?.server_data?.[0]);
     } catch (error) {
@@ -64,9 +64,9 @@ const WatchPage = () => {
       <h4 className="bg-gray-700 p-2 text-yellow-500 font-semibold ">
         NẾU KHÔNG TẢI ĐƯỢC NỘI DUNG, HÃY BẤM F5 HOẶC TẢI LẠI TRANG 1 HOẶC 2 LẦN BẠN NHÉ .
       </h4>
-      <div className="flex mt-5">
+      <div className="flex flex-col xl:flex-row gap-5 p-5 w-full bg-gray-800">
         {/* 70% Section */}
-        <div className="w-full xl:w-[70%] bg-gray-800 p-5">
+        <div className="w-full xl:w-[70%]  p-5">
           <div className="relative aspect-video bg-gray-800 rounded-lg overflow-hidden shadow-lg">
             {loading ? (
               <p>Loading...</p>
@@ -105,7 +105,7 @@ const WatchPage = () => {
           <div className="mt-5">
             {movieDetails?.data?.item?.episodes?.[0]?.server_data?.length > 0 ? (
               <div>
-                <div className="w-1/5 flex gap-5 bg-gray-700/50 px-5 py-2 items-center text-center">
+                <div className="sm:w-1/3 xl:w-1/4 flex gap-5 bg-gray-700/50 px-5 py-2 items-center text-center">
                   <FaBars />
                   <span className="font-semibold text-yellow-600">
                     {movieDetails.data.item.episodes[0].server_name}
@@ -136,7 +136,7 @@ const WatchPage = () => {
           </div>
         </div>
         {/* 30% Section */}
-        <div className="w-full xl:w-[30%] bg-gray-800">
+        <div className="order-3 xl:order-3 basis-full xl:basis-1/3">
           <PopolarFilm />
         </div>
       </div>
