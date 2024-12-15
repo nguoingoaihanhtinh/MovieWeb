@@ -1,10 +1,10 @@
-import React, { useEffect, useState, Suspense } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { Button } from "antd"; // Assuming you want to use Ant Design buttons
 import PopularCard from "../../../components/Films/PopularCard";
 
 const PopolarFilm = () => {
   const [movies, setMovies] = useState([]);
-  const [total, setTotal] = useState(0);
+
   const [page, setPage] = useState(1); // For pagination
   const [categoryUrl, setCategoryUrl] = useState(
     "https://ophim1.com/v1/api/danh-sach/moi?category=&country=&year=&sort_field=week&page=1"
@@ -18,7 +18,6 @@ const PopolarFilm = () => {
       .then((data) => {
         if (data.data && Array.isArray(data.data.items)) {
           setMovies(data.data.items); // Load movies
-          setTotal(data.data.items.length); // Set total movie count
         } else {
           console.error('Expected an array in "data.data.items", but received:', data);
         }
@@ -71,11 +70,10 @@ const PopolarFilm = () => {
 
       {/* Lazy load FilmList */}
       <Suspense fallback={<div>Loading...</div>}>
-        <div className="movies-list flex flex-col gap-2 pl-5 py-5 border-purple-500 border-l">
+        <div className="movies-list grid  sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-1  gap-4 px-5 py-5 xl:border-purple-500 xl:border-l">
           {currentMovies.map((movie) => (
             <PopularCard
-              key={movie.id} // Ensure each card has a unique key
-              id={movie.id}
+              key={movie.id}
               img={movie.thumb_url}
               title={movie.name}
               origin_name={movie.origin_name}

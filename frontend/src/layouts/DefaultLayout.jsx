@@ -8,11 +8,13 @@ const DefaultLayout = () => {
       {/* Header Section */}
       <Header />
       {/* Content Section */}
-      <div className="flex mt-10 w-full px-40 ">
+      <div className="flex mt-10 w-full px-16  ">
         <Outlet />
       </div>
       {/* Footer Section */}
-      <Footer />
+      <div className="footer w-full">
+        <Footer />
+      </div>
     </div>
   );
 };

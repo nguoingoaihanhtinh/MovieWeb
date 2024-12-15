@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { FaBars, FaTriangleExclamation } from "react-icons/fa6";
 import RelatedList from "../components/Films/RelatedList";
 import PopolarFilm from "./HomePage/Popular/PopolarFilm";
-import { FaTimes } from "react-icons/fa";
 
 const MovieDetail = () => {
   const { name } = useParams();
@@ -60,9 +59,11 @@ const MovieDetail = () => {
     setShowTrailer((prev) => !prev);
   };
   return (
-    <div className="flex bg-black/50 p-5 w-full">
-      <div className="mt-8 flex flex-col  gap-5 basis-2/3 ">
-        <div className="flex flex-col">
+    <div className="flex flex-col xl:flex-row gap-5 p-5 bg-black/50 w-full">
+      {/* Detail Section */}
+      <div className="order-1 xl:order-1 basis-full xl:basis-2/3 flex flex-col gap-5">
+        {/* Detail */}
+        <div className="flex flex-col gap-5">
           <div className="flex gap-8">
             <div className="w-full md:w-1/3 px-4 md:px-0">
               <div className="relative max-w-[90%] mx-auto md:max-w-none">
@@ -89,9 +90,11 @@ const MovieDetail = () => {
               </div>
             </div>
             <div className="md:w-2/3 text-left">
-              <p className="text-2xl font-medium mb-2">{film?.item?.name}</p>
-              <p className="text-gray-400 mb-4">{film?.item?.origin_name}</p>
-              <div className="grid grid-cols-2 gap-x-8 gap-y-4 mb-3 text-sm text-left pt-10">
+              <p className="text-xl md:text-2xl font-medium mb-2">{film?.item?.name}</p>
+              <p className="text-gray-400 text-sm md:text-base mb-4">{film?.item?.origin_name}</p>
+
+              {/* Details Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 mb-3 text-sm md:text-base pt-5">
                 <div>
                   <span className="text-gray-400">Năm: </span>
                   <span className="text-gray-200">{film?.item?.year}</span>
@@ -108,7 +111,7 @@ const MovieDetail = () => {
                 </div>
                 <div>
                   <span className="text-gray-400">Tập mới nhất: </span>
-                  <span className="text-gray-200">{film.item.episode_current}</span>
+                  <span className="text-gray-200">{film?.item?.episode_current}</span>
                 </div>
                 <div>
                   <span className="text-gray-400">Quốc gia: </span>
@@ -127,20 +130,28 @@ const MovieDetail = () => {
                   </span>
                 </div>
               </div>
-              <div className="mb-2 max-w-[500px] max-h-[75px] overflow-clip">
-                <h2 className="font-semibold mb-2">Diễn viên</h2>
-                <p className="text-gray-400 text-sm">{film?.item?.actor?.join(", ") || "N/A"}</p>
+
+              {/* Actors */}
+              <div className="mb-2 max-w-[500px]">
+                <h2 className="font-semibold mb-2 text-base md:text-lg">Diễn viên</h2>
+                <p className="text-gray-400 text-sm md:text-base overflow-hidden text-ellipsis">
+                  {film?.item?.actor?.join(", ") || "N/A"}
+                </p>
               </div>
+
+              {/* Ratings */}
               <div className="flex items-center mb-6">
                 <span className="text-yellow-400 text-lg mr-1">⭐</span>
-                <span className="text-xl font-bold">{film?.tmdb?.vote_average || "N/A"}</span>
+                <span className="text-lg md:text-xl font-bold">{film?.tmdb?.vote_average || "N/A"}</span>
                 <span className="text-gray-400 ml-2">({film?.tmdb?.vote_count || 0} lượt)</span>
               </div>
-              {film?.item?.trailer_url && ( // Show button only if trailer exists
+
+              {/* Trailer Button */}
+              {film?.item?.trailer_url && (
                 <div className="trailerButton">
                   <button
                     onClick={toggleTrailerModal}
-                    className="bg-gradient-to-r rounded-full from-green-500 to-blue-500 text-white font-bold px-4 py-2 hover:from-blue-500 hover:to-green-500 border-none"
+                    className="bg-gradient-to-r rounded-full from-green-500 to-blue-500 text-white font-bold px-4 py-2 hover:from-blue-500 hover:to-green-500 transition-all"
                   >
                     Trailer
                   </button>
@@ -189,13 +200,13 @@ const MovieDetail = () => {
           {showEpisodes &&
             (movieDetails?.data?.item?.episodes?.[0]?.server_data?.length > 0 ? (
               <div className="">
-                <div className="w-1/5 flex gap-5 bg-gray-800 px-5 py-2 items-center text-center">
+                <div className="sm:w-1/3 xl:w-1/4 flex gap-5 bg-gray-800 px-5 py-2 items-center text-center">
                   <FaBars />
                   <span className="font-semibold text-yellow-600">
                     {movieDetails.data.item.episodes[0].server_name}
                   </span>
                 </div>
-                <div className="flex flex-wrap gap-2  p-5 bg-gray-800">
+                <div className="flex flex-wrap gap-2 p-5 bg-gray-800">
                   {movieDetails?.data?.item?.episodes[0]?.server_data.map((episode) => (
                     <button
                       key={episode?.slug}
@@ -223,11 +234,13 @@ const MovieDetail = () => {
             <h4 className="text-gray-400 text-md text-left">{movieDetails?.data?.item?.content}</h4>
           </div>
         </div>
-        <div className="related">
+        {/* Related */}
+        <div className="order-2 xl:order-2 basis-full xl:basis-1/3">
           <RelatedList slug={movieDetails?.data?.item?.slug} />
         </div>
       </div>
-      <div className="w-full xl:basis-1/3 bg-transparent">
+      {/* Popular */}
+      <div className="order-3 xl:order-3 basis-full xl:basis-1/3">
         <PopolarFilm />
       </div>
     </div>

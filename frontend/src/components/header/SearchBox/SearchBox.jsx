@@ -21,7 +21,7 @@ const SearchBox = () => {
         const response = await fetch(`https://ophim1.com/v1/api/tim-kiem?keyword=${debouncedKeyword}`);
         const data = await response.json();
 
-        console.log("API Response:", data);
+        // console.log("API Response:", data);
 
         // Accessing `items` array from `data`
         if (data?.data?.items && Array.isArray(data.data.items)) {

@@ -81,12 +81,14 @@ const FilmListPage = () => {
 
   return (
     <div className="bg-black/50 p-5">
-      <div className="filter">
-        <Suspense fallback={<div>Loading filters...</div>}>
-          <Filter onFilterChange={handleFilterChange} />
-        </Suspense>
+      <div className="flex justify-center w-full px-20">
+        <div className="filter items-center w-full">
+          <Suspense fallback={<div>Loading filters...</div>}>
+            <Filter onFilterChange={handleFilterChange} />
+          </Suspense>
+        </div>
       </div>
-      <div className="content flex">
+      <div className="content flex flex-col xl:flex-row gap-5 p-5 w-full">
         <div className="filmlist basis-2/3">
           <div>
             <div className="heading flex items-center justify-between px-10">
@@ -99,7 +101,7 @@ const FilmListPage = () => {
             </Suspense>
           </div>
         </div>
-        <div className="popular basis-1/3">
+        <div className="order-3 xl:order-3 basis-full xl:basis-1/3">
           <Suspense fallback={<div>Loading popular films...</div>}>
             <PopolarFilm />
           </Suspense>

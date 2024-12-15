@@ -30,13 +30,13 @@ const HomePage = () => {
       const promises = Object.entries(categoryUrls).map(async ([category, url]) => {
         const response = await fetch(url);
         const data = await response.json();
-        console.log(`API response for ${category}:`, data);
+        // console.log(`API response for ${category}:`, data);
         return {
           [category]: Array.isArray(data.data?.items) ? data.data.items : [],
         };
       });
       const results = await Promise.all(promises);
-      console.log("Processed movie categories:", results);
+      // console.log("Processed movie categories:", results);
       setMovies(results.reduce((acc, curr) => ({ ...acc, ...curr }), {}));
     } catch (error) {
       console.error("Error fetching movies:", error);
@@ -47,7 +47,7 @@ const HomePage = () => {
     fetchMoviesByCategory();
   }, []);
   useEffect(() => {
-    console.log("Movies new:", movies.new);
+    // console.log("Movies new:", movies.new);
   }, [movies.new]);
   useEffect(() => {
     window.scrollTo(0, 0); // Scrolls to the top-left corner of the page
@@ -78,7 +78,7 @@ const HomePage = () => {
           <FilmList movies={movies.new || []} itemPerPage={6} grid={6} pageLimit={1} />
         </Suspense>
       </div>
-      <div className="content flex mt-20">
+      <div className="flex flex-col xl:flex-row gap-5 p-5 w-full">
         <div className="Films basis-2/3 flex flex-col gap-2">
           {["hot", "movies", "series", "animation"].map((category) => {
             // Define slugs based on category
@@ -119,7 +119,7 @@ const HomePage = () => {
             );
           })}
         </div>
-        <div className="basis-1/3">
+        <div className="order-3 xl:order-3 basis-full xl:basis-1/3">
           <PopolarFilm />
         </div>
       </div>
