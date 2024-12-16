@@ -3,6 +3,7 @@ import { useParams, useLocation } from "react-router-dom";
 import FilmList from "../../components/Films/FilmList";
 import PopolarFilm from "../HomePage/Popular/PopolarFilm";
 import Filter from "../../components/Films/Filter";
+import { Spin } from "antd";
 
 const categoryMap = {
   "phim-le": "Phim Lẻ",
@@ -96,7 +97,13 @@ const FilmListPage = () => {
                 {categoryName}
               </h1>
             </div>
-            <Suspense fallback={<div>Loading films...</div>}>
+            <Suspense
+              fallback={
+                <div>
+                  <Spin />
+                </div>
+              }
+            >
               {!loading && <FilmList movies={movies} grid={4} itemPerPage={20} pageLimit={5} />}
             </Suspense>
           </div>

@@ -60,7 +60,7 @@ const HomePage = () => {
       <div className="hero">
         <Hero data={movies.hot || []} />
       </div>
-      <div className="upcoming">
+      <div className="upcoming px-5">
         <div className="heading flex items-center justify-between px-10">
           <div className="relative inline-block">
             <h1 className="font-bold text-xl bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent relative z-10">
@@ -89,7 +89,7 @@ const HomePage = () => {
                 ? "phim-le"
                 : category === "series"
                 ? "phim-bo"
-                : "phim-hoat-hinh";
+                : "hoat-hinh";
 
             return (
               <div key={category} className={`${category}-movies mt-5`}>

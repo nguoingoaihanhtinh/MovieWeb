@@ -1,5 +1,4 @@
 import { useEffect, useState, Suspense } from "react";
-import { Button } from "antd"; // Assuming you want to use Ant Design buttons
 import PopularCard from "../../../components/Films/PopularCard";
 
 const PopolarFilm = () => {
@@ -47,24 +46,24 @@ const PopolarFilm = () => {
           </h1>
         </div>
         <div className="buttons flex gap-2">
-          <Button
+          <button
             className="bg-gradient-to-r from-orange-500 to-pink-500 text-white font-bold rounded-lg px-4 py-2 hover:from-pink-500 hover:to-orange-500 border-none"
             onClick={() => handlePeriodChange("week")}
           >
             Tuần
-          </Button>
-          <Button
+          </button>
+          <button
             className="bg-gradient-to-r from-orange-500 to-pink-500 text-white font-bold rounded-lg px-4 py-2 hover:from-pink-500 hover:to-orange-500 border-none"
             onClick={() => handlePeriodChange("month")}
           >
             Tháng
-          </Button>
-          <Button
+          </button>
+          <button
             className="bg-gradient-to-r from-orange-500 to-pink-500 text-white font-bold rounded-lg px-4 py-2 hover:from-pink-500 hover:to-orange-500 border-none"
             onClick={() => handlePeriodChange("year")}
           >
             Năm
-          </Button>
+          </button>
         </div>
       </div>
 

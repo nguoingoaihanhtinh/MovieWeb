@@ -18,7 +18,7 @@ const FilmCard = ({ img, title, origin_name, status, quality, slug }) => {
 
   return (
     <Link to={`/detail/${encodeURIComponent(slug)}`}>
-      <div className="shadow-lg transition-all duration-500 hover:shadow-xl dark:bg-slate-700 dark:text-white cursor-pointer rounded-xl">
+      <div className="shadow-lg transition-all duration-500 hover:shadow-xl dark:bg-slate-700 dark:text-white cursor-pointer rounded-xl hover:scale-105">
         <div className="relative overflow-hidden">
           {/* Low-quality image placeholder */}
           <img
@@ -54,7 +54,7 @@ const FilmCard = ({ img, title, origin_name, status, quality, slug }) => {
 
         {/* Title and Origin Name */}
         <div className="p-2 items-center text-center">
-          <h1 className="line-clamp-1 text-teal-400 font-bold text-base truncate">{origin_name}</h1>
+          <h1 className="line-clamp-1 text-purple-500 font-bold text-base truncate">{origin_name}</h1>
           <p className="line-clamp-1 text-sm truncate">{title}</p>
         </div>
       </div>
