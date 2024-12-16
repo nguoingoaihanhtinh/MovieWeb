@@ -1,5 +1,6 @@
 import { Suspense, useEffect, useState } from "react";
 import FilmList from "./FilmList";
+import { Spin } from "antd";
 
 // eslint-disable-next-line react/prop-types
 const RelatedList = ({ slug }) => {
@@ -59,7 +60,9 @@ const RelatedList = ({ slug }) => {
         </h1>
       </div>
       {loading ? (
-        <div>Loading related films...</div>
+        <div>
+          <Spin className="text-lg" />
+        </div>
       ) : relatedMovies.length > 0 ? (
         <Suspense fallback={<div>Loading films...</div>}>
           {!loading && <FilmList movies={relatedMovies} grid={4} itemPerPage={20} pageLimit={5} />}

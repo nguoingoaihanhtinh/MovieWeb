@@ -1,21 +1,46 @@
+import { useLocation, useNavigate } from "react-router-dom";
+
 const NavBar = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const handleNavigate = (movieType) => {
+    navigate(`/list?movieType=${movieType}`);
+  };
+  if (location.pathname === "/list") {
+    return null; // Don't render the NavBar if we're on the "/list" page
+  }
   return (
     <nav className="hidden space-x-5 text-base text-gray-200 lg:flex capitalize items-center">
-      <a href="/" className="transition-colors hover:text-basicLime duration-300">
+      <div
+        onClick={() => navigate("/")}
+        className="transition-colors hover:text-purple-500 hover:underline duration-300 cursor-pointer"
+      >
         Trang chủ
-      </a>
-      <a href="/list?movieType=phim-le" className="transition-colors hover:text-basicLime duration-300">
+      </div>
+      <div
+        onClick={() => handleNavigate("phim-le")}
+        className="transition-colors hover:text-purple-500 hover:underline duration-300 cursor-pointer"
+      >
         Phim lẻ
-      </a>
-      <a href="/list?movieType=phim-bo" className="transition-colors hover:text-basicLime duration-300">
+      </div>
+      <div
+        onClick={() => handleNavigate("phim-bo")}
+        className="transition-colors hover:text-purple-500 hover:underline  duration-300 cursor-pointer"
+      >
         Phim bộ
-      </a>
-      <a href="/list?movieType=tv-shows" className="transition-colors hover:text-basicLime duration-300">
+      </div>
+      <div
+        onClick={() => handleNavigate("tv-shows")}
+        className="transition-colors hover:text-purple-500 hover:underline  duration-300 cursor-pointer"
+      >
         TV Show
-      </a>
-      <a href="/list?movieType=hoat-hinh" className="transition-colors hover:text-basicLime duration-300">
+      </div>
+      <div
+        onClick={() => handleNavigate("hoat-hinh")}
+        className="transition-colors hover:text-purple-500 hover:underline  duration-300 cursor-pointer"
+      >
         Hoạt hình
-      </a>
+      </div>
     </nav>
   );
 };

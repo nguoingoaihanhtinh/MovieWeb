@@ -5,7 +5,7 @@ const Header = () => {
   return (
     <div className="fixed top-0 z-50 w-full transition-all duration-300 shadow-lg bg-container backdrop-blur-sm bg-gradient-to-r from-black/70 to-transparent">
       <div className="mx-auto flex  max-w-full items-center justify-between px-6 sm:px-8 lg:px-16">
-        <div className="flex justify-between items-center space-x-6 lg:space-x-8">
+        <div className="flex justify-start items-center space-x-6 lg:space-x-8 basis-1/3">
           <a href="/" className="">
             <img
               src="https://divinityoriginalsin2.wiki.fextralife.com/file/Divinity-Original-Sin-2/sir-lora-gallery-npc-divinity2-wiki-guide.jpg"
@@ -16,8 +16,12 @@ const Header = () => {
             Lora&apos;s movies
           </h1>
         </div>
-        <NavBar />
-        <SearchBox />
+        <div className="nav basis-1/3">
+          <NavBar />
+        </div>
+        <div className="search basis-1/3 justify-end">
+          <SearchBox />
+        </div>
       </div>
     </div>
   );
