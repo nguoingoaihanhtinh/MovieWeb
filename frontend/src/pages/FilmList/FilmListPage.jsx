@@ -78,7 +78,7 @@ const FilmListPage = () => {
   useEffect(() => {
     setMovies({});
     preloadMovies();
-  }, [FilmUrl]);
+  }, [filters, location.search]);
 
   return (
     <div className="bg-black/50 p-5">
